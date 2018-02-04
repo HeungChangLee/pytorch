@@ -107,11 +107,12 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                          shuffle=False)
 
 
-# Training SqueezeNet
+# Training the SqueezeNet model
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 for epoch in range(num_epochs):
+    model.train()
     for i, (images, labels) in enumerate(train_loader):
         images = Variable(images)
         labels = Variable(labels)
@@ -122,11 +123,24 @@ for epoch in range(num_epochs):
         
         loss.backward()
         optimizer.step()
-        #print ("Loss: ",loss.data[0])
         
         
         if (i+1) % 100 == 0:
             print ('Epoch [%d/%d], Iter [%d/%d] Loss: %.4f'
                   %(epoch+1, num_epochs, i+1, len(train_dataset)//batch_size, loss.data[0]))
-            
+
+
+# Evaluate the SqueezeNet model
+    model.eval()
+    test_loss = 0
+    correct = 0
+    for images, labels in test_loader:
+        images = Variable(images, volatile=True)
+        labels = Variable(labels)
+        outputs = model(images)
+        test_loss += criterion(outputs, labels)
+        predict = outputs.data.max(1, keepdim=True)[1]
+        correct += predict.eq(labels.data.view_as(predict)).cpu().sum()
         
+    test_loss /= len(test_loader.dataset)
+    print ('Test Loss: %.4f, Accuracy: %.2f%%' %(test_loss, 100. * correct / len(test_loader.dataset)))
