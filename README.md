@@ -4,5 +4,5 @@
   2) SqueezeNet fitted CIFAR-10 dataset
   3) SqueezeNet fitted MNIST dataset
 
-- Result of SqueezeNet about MNIST dataset \n
-![MNIST](./images/MNIST_result.PNG)
+- Result of SqueezeNet about MNIST dataset
+  1) ![MNIST](./images/MNIST_result.PNG)
