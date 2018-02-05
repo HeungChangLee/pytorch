@@ -5,4 +5,4 @@
   3) SqueezeNet fitted MNIST dataset
 
 - Result of SqueezeNet about MNIST dataset
-![MNIST](./images/MNIST_result.png)
+![MNIST](./images/MNIST_result.PNG)
